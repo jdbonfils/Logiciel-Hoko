@@ -1,30 +1,40 @@
-#include "InterfacePrincipale.h"
+#include "Interface/InterfacePrincipale.h"
 #include "ui_InterfacePrincipale.h"
+#include "Fenetres/FenetreModifier.h"
+#include "Image/GestionImage.h"
+
 #include <opencv2/opencv.hpp>
 #include <QFileDialog>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
+#include <stdio.h>
+#include <cmath>
+#include <QResizeEvent>
+
 #include <qdesktopservices.h>
 #include <QtWidgets/qtwidgetsglobal.h>
 #include <string>
 #include <qmessagebox.h>
 #include <iostream>
-#include <cmath>
-#include <stdio.h>
+
+#if defined(Q_OS_WIN32) // Includes pour la compilation sous Windows
 #include <windows.h>
 #include <libloaderapi.h>
+
 #include <qpainter.h>
-#include <QResizeEvent>
+#endif // Fin des includes pour Windows
+
+
 using namespace std;
 using namespace cv;
 
 
-
-InterfacePrincipale::InterfacePrincipale(QWidget *parent) :
+InterfacePrincipale::InterfacePrincipale(GestionImage gestionImage, QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::InterfacePrincipale)
 {
 	ui->setupUi(this);
+	gestionImage = gestionImage;
 }
 
 InterfacePrincipale::~InterfacePrincipale()
@@ -32,65 +42,60 @@ InterfacePrincipale::~InterfacePrincipale()
 	delete ui;
 }
 
+
 void InterfacePrincipale::importerUneImage()
 {
 	QString nomImage = QFileDialog::getOpenFileName(this, tr("Open Image"), QDir::currentPath(), tr("Image Files [ *.jpg , *.jpeg , *.bmp , *.png , *.gif]"));
-	
+
 	char* cheminImage = nomImage.toLocal8Bit().data();
 
-	 imageOriginale = cv::imread(cheminImage);
-	cv::Mat imageMat = imageOriginale;
+	gestionImage.setImageOriginale(cv::imread(cheminImage));
 
-	double largeurFinale = ui->label->width();
-	double largeurInitiale = imageMat.cols;
+	cv::Mat imageMat = gestionImage.getImageOriginale();
 
-	double echelle = largeurFinale / largeurInitiale;
-	
-
-
-	echelle = echelle - fmod(echelle, 0.05);
-	
-
-	/*printf("largeurFinale : %f \n", largeurFinale);
-	printf("largeurInitiale : %f \n", largeurInitiale);
-	printf("echelle : %f \n", echelle);*/
-
-	/*printf("Largeur 1 : %d \n", imageMat.cols);
-	printf("Hauteur 1 : %d \n", imageMat.rows);*/
-
-	cv::resize(imageMat, imageMat, cv::Size(), echelle, echelle);
-
-	/*printf("Largeur 2 : %d \n", imageMat.cols);
-	printf("Hauteur 2 : %d \n", imageMat.rows);*/
-
-	QImage imageQ = QImage((const unsigned char*)imageMat.data, imageMat.cols, imageMat.rows, QImage::Format_RGB888).rgbSwapped();
-	ui->label->setPixmap(QPixmap::fromImage(imageQ));
-	ui->label_2->setPixmap(QPixmap::fromImage(imageQ));
-	ui->label_3->setPixmap(QPixmap::fromImage(imageQ));
-	ui->label_4->setPixmap(QPixmap::fromImage(imageQ));
-	 imageImportee = true;
+	majImage1(imageMat);
+	majImage2(imageMat);
+	majImage3(imageMat);
+	majImage4(imageMat);
 }
+
+
+void InterfacePrincipale::resizeEvent(QResizeEvent* event)
+{
+	if (gestionImage.isImportee()) {
+
+		cv::Mat imageMat = gestionImage.getImageOriginale();
+
+		majImage1(imageMat);
+		majImage2(imageMat);
+		majImage3(imageMat);
+		majImage4(imageMat);
+	}
+}
+
+
 void InterfacePrincipale::sauvegarderImageFinale()
 {
-	if (ui->label_4->pixmap()) {
-			//On recupere la dernière image (label4) au format Qpixmap
-			const QPixmap *imageQ = ui->label_4->pixmap();
-			//Conversion du Qpixmap en Qimage
-			QImage monImage = imageQ->toImage();
-			//Choix de l'emplacement de la photo
-			QString filename = QFileDialog::getSaveFileName(this, tr("Sauvegarder l'inmage"), QDir::currentPath());
-			//Sauvegarde de l'image à l'emplacement souhaité
-			monImage.save(filename);
-		}
+	if (gestionImage.isImportee()) {
+		//On recupere la dernière image (label4) au format Qpixmap
+		const QPixmap *imageQ = ui->image4->pixmap();
+		//Conversion du Qpixmap en Qimage
+		QImage monImage = imageQ->toImage();
+		//Choix de l'emplacement de la photo
+		QString filename = QFileDialog::getSaveFileName(this, tr("Sauvegarder l'image"), QDir::currentPath());
+		//Sauvegarde de l'image à l'emplacement souhaité
+		monImage.save(filename);
+	}
 	else
-		{
-			//Si aucune image n'a été importé
-			QMessageBox::critical(this, tr("Erreur"), tr("Importez d'abord une Image"));
-			importerUneImage();
-		}
+	{
+		//Si aucune image n'a été importé
+		QMessageBox::critical(this, tr("Erreur"), tr("Importez d'abord une image"));
+		importerUneImage();
+	}
 
 
 }
+
 void InterfacePrincipale::afficherGuide()
 {
 #if defined(Q_OS_WIN32)
@@ -102,17 +107,18 @@ void InterfacePrincipale::afficherGuide()
 	//Conversion d'une chaine string en qstring
 	QString qpath = QString::fromStdString(string(buffer).substr(0, pos));
 
+#elif defined(Q_OS_UNIX)
+	QString qpath = QCoreApplication::applicationDirPath();
+#endif
+
 	if (!QDesktopServices::openUrl(QUrl::fromLocalFile(qpath + "/GuideHoko.pdf")))
 	{
 		//En cas d'erreur un fenetre d'erreur s'ouvre
-		QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier...."));
+		QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier..."));
 	}
-	//Sous windows la commande por ouvrir une cmd et ouvrir le pdf
-	//system("start C:\CheminAbsolue\GuideHoko.pdf");
-#elif defined(Q_OS_UNIX)
-#endif
 
 }
+
 void InterfacePrincipale::afficherApropos()
 {
 #if defined(Q_OS_WIN32)
@@ -123,38 +129,60 @@ void InterfacePrincipale::afficherApropos()
 	string::size_type pos = string(buffer).find_last_of("\\/");
 	//Conversion d'une chaine string en qstring
 	QString qpath = QString::fromStdString(string(buffer).substr(0, pos));
-	if (!QDesktopServices::openUrl(QUrl::fromLocalFile(qpath + "/Apropos.pdf")))
-		{
-			//En cas d'erreur un fenetre d'erreur s'ouvre
-			QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier...."));
-		}
-	//Sous windows la commande por ouvrir une cmd et ouvrir le pdf
-	//system("start C:\CheminAbsolue\GuideHoko.pdf");
-#elif defined(Q_OS_UNIX)
-#endif
 
+#elif defined(Q_OS_UNIX)
+	QString qpath = QCoreApplication::applicationDirPath();
+#endif
+	if (!QDesktopServices::openUrl(QUrl::fromLocalFile(qpath + "/Apropos.pdf")))
+	{
+		//En cas d'erreur un fenetre d'erreur s'ouvre
+		QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier..."));
+	}
+}
+
+void InterfacePrincipale::on_ajouterBouton_clicked()
+{
+
+	if (gestionImage.isImportee()) {
+		FenetreModifier *fenMod = new FenetreModifier(this);
+		fenMod->show();
+	}
 }
 
 
-/*void InterfacePrincipale::resizeEvent(QResizeEvent* event)
-{
-	//printf("Resize \n");
-	if (imageImportee) {
-		cv::Mat imageMat = imageOriginale;
-		double largeurFinale = ui->label->width();
-		double largeurInitiale = imageMat.cols;
+void InterfacePrincipale::majImage1(cv::Mat image) {
+	image = redimensionner(image);
+	QImage imageQ = QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format_RGB888).rgbSwapped();
+	ui->image1->setPixmap(QPixmap::fromImage(imageQ));
+}
 
-		double echelle = largeurFinale / largeurInitiale;
-		echelle = echelle - fmod(echelle, 0.05);
+void InterfacePrincipale::majImage2(cv::Mat image) {
+	image = redimensionner(image);
+	QImage imageQ = QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format_RGB888).rgbSwapped();
+	ui->image2->setPixmap(QPixmap::fromImage(imageQ));
+}
 
-		cv::resize(imageMat, imageMat, cv::Size(), echelle, echelle);
+void InterfacePrincipale::majImage3(cv::Mat image) {
+	image = redimensionner(image);
+	QImage imageQ = QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format_RGB888).rgbSwapped();
+	ui->image3->setPixmap(QPixmap::fromImage(imageQ));
+}
 
-		QImage imageQ = QImage((const unsigned char*)imageMat.data, imageMat.cols, imageMat.rows, QImage::Format_RGB888).rgbSwapped();
-		ui->label->setPixmap(QPixmap::fromImage(imageQ));
-		ui->label_2->setPixmap(QPixmap::fromImage(imageQ));
-		ui->label_3->setPixmap(QPixmap::fromImage(imageQ));
-		ui->label_4->setPixmap(QPixmap::fromImage(imageQ));
-	}
-}*/
+void InterfacePrincipale::majImage4(cv::Mat image) {
+	image = redimensionner(image);
+	QImage imageQ = QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format_RGB888).rgbSwapped();
+	ui->image4->setPixmap(QPixmap::fromImage(imageQ));
+}
 
 
+cv::Mat InterfacePrincipale::redimensionner(cv::Mat image) {
+
+	double largeurFinale = ui->image1->width();
+	double largeurInitiale = image.cols;
+
+	double echelle = largeurFinale / largeurInitiale;
+	echelle = echelle - fmod(echelle, 0.05);
+
+	cv::resize(image, image, cv::Size(), echelle, echelle);
+	return image;
+}

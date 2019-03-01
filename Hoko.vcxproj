@@ -69,7 +69,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;C:\opencv\build\include;%(AdditionalIncludeDirectories);C:\opencv\build\include;C:\opencv\build\include;C:\opencv\build\include</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;C:\opencv\build\include;$(INHERIT)</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
     </QtMoc>
     <QtUic>
@@ -100,7 +100,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories);C:\opencv\build\include;C:\opencv\build\include;C:\opencv\build\include</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(INHERIT);C:\opencv\build\include</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
     </QtMoc>
     <QtUic>
@@ -113,17 +113,26 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="InterfacePrincipale.cpp" />
+    <ClCompile Include="Image\GestionImage.cpp" />
+    <ClCompile Include="Interface\Fenetres\FenetreModifier.cpp" />
+    <ClCompile Include="Interface\InterfacePrincipale.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="InterfacePrincipale.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="Hoko.ui" />
-  </ItemGroup>
-  <ItemGroup>
     <QtRcc Include="Hoko.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="Interface\Fenetres\FenetreModifier.ui" />
+    <QtUic Include="Interface\InterfacePrincipale.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Interface\InterfacePrincipale.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Interface\Fenetres\FenetreModifier.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Image\GestionImage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

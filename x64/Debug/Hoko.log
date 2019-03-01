@@ -1,5 +1,18 @@
-﻿  Moc'ing InterfacePrincipale.h...
-  moc_InterfacePrincipale.cpp
+﻿  GestionImage.cpp
+  FenetreModifier.cpp
   InterfacePrincipale.cpp
   main.cpp
-  Hoko.vcxproj -> C:\Users\jeand\source\repos\Hoko\x64\Debug\Hoko.exe
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(29): error C2061: erreur de syntaxe : identificateur 'InterfacePrincipale' (compilation du fichier source Interface\InterfacePrincipale.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2143: erreur de syntaxe : absence de ';' avant '*' (compilation du fichier source Interface\InterfacePrincipale.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut (compilation du fichier source Interface\InterfacePrincipale.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2238: jetons inattendus avant ';' (compilation du fichier source Interface\InterfacePrincipale.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(29): error C2061: erreur de syntaxe : identificateur 'InterfacePrincipale' (compilation du fichier source main.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2143: erreur de syntaxe : absence de ';' avant '*' (compilation du fichier source main.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut (compilation du fichier source main.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2238: jetons inattendus avant ';' (compilation du fichier source main.cpp)
+  qrc_Hoko.cpp
+  moc_InterfacePrincipale.cpp
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(29): error C2061: erreur de syntaxe : identificateur 'InterfacePrincipale' (compilation du fichier source GeneratedFiles\Debug\moc_InterfacePrincipale.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2143: erreur de syntaxe : absence de ';' avant '*' (compilation du fichier source GeneratedFiles\Debug\moc_InterfacePrincipale.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut (compilation du fichier source GeneratedFiles\Debug\moc_InterfacePrincipale.cpp)
+c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2238: jetons inattendus avant ';' (compilation du fichier source GeneratedFiles\Debug\moc_InterfacePrincipale.cpp)

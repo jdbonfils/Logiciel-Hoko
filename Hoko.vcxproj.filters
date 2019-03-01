@@ -33,14 +33,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InterfacePrincipale.cpp">
+    <ClCompile Include="Interface\InterfacePrincipale.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="Hoko.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
+    <ClCompile Include="Interface\Fenetres\FenetreModifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Image\GestionImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Hoko.qrc">
@@ -48,7 +49,29 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="InterfacePrincipale.h">
+    <ClInclude Include="ui_FenetreModifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_InterfacePrincipale.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Image\GestionImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="Interface\Fenetres\FenetreModifier.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Interface\InterfacePrincipale.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Interface\InterfacePrincipale.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Interface\Fenetres\FenetreModifier.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
