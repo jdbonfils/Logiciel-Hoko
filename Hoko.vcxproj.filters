@@ -30,7 +30,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Controleur.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Traitement\FlouGaussien.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Traitement\GestionTraitement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Traitement\Traitement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Interface\InterfacePrincipale.cpp">
@@ -42,30 +54,41 @@
     <ClCompile Include="Image\GestionImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Traitement\SegmentationTSV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Traitement\FiltreCanny.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Traitement\Masque.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Traitement\Contours.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="Hoko.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ui_FenetreModifier.h">
+    <ClInclude Include="Controleur.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_InterfacePrincipale.h">
+    <ClInclude Include="Traitement\FlouGaussien.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Traitement\GestionTraitement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Traitement\Traitement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Image\GestionImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="Interface\Fenetres\FenetreModifier.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="Interface\InterfacePrincipale.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
+    <ClInclude Include="build\HoKo_autogen\include\ui_InterfacePrincipale.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Fenetres\ui_FenetreModifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Interface\InterfacePrincipale.h">
@@ -74,5 +97,17 @@
     <QtMoc Include="Interface\Fenetres\FenetreModifier.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="Interface\InterfacePrincipale.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Interface\Fenetres\FenetreModifier.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="logo\hoko-logo-500.png" />
+    <Image Include="logo\hoko-logo-1000.png" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,3 @@
-
-
 #ifndef GESTIONIMAGE_H
 #define GESTIONIMAGE_H
 
@@ -8,35 +6,35 @@
 /**
 * Gestionnaire des images
 */
-class GestionImage
+class GestionImage 
 {
 
 private:
-	/** Booléen vrai si une image a été importée par l'utilisateur, faux sinon */
+	/** BoolÃ©en vrai si une image a Ã©tÃ© importÃ©e par l'utilisateur, faux sinon */
 	bool importee;
 
-	/** L'image importée, non modifiée*/
+	/** L'image importÃ©e, non modifiÃ©e*/
 	cv::Mat imageOriginale;
 public:
 	/**
-	* Constructeur de la classe, initialise importee à false.
+	* Constructeur de la classe, initialise importee Ã  false. 
 	*/
 	GestionImage();
 
 	/**
-	* Teste si une image à été importée par l'utilisateur.
-	* /return True si une image a été importée par l'utilisateur, False sinon.
+	* Teste si une image Ã  Ã©tÃ© importÃ©e par l'utilisateur.
+	* /return True si une image a Ã©tÃ© importÃ©e par l'utilisateur, False sinon.
 	*/
 	bool isImportee();
 
 	/**
 	* Retourne l' imageOriginale.
-	* \return imageOriginale, l'image importée, non modifiée.
+	* \return imageOriginale, l'image importÃ©e, non modifiÃ©e.
 	*/
 	cv::Mat getImageOriginale();
 
 	/**
-	* Définit l'imageOriginale.
+	* DÃ©finit l'imageOriginale.
 	* \param image Image au format OpenCV Mat
 	*/
 	void setImageOriginale(cv::Mat image);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>FenetreModifier</class>
  <widget class="QDialog" name="FenetreModifier">
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Modification des parametres</string>
+   <string>Modification des paramètres</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -68,7 +68,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="appliquerBouton">
+       <property name="text">
+        <string>Appliquer</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="annulerBouton">
        <property name="text">
         <string>Annuler</string>
        </property>

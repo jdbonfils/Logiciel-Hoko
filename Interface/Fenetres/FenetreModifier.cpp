@@ -1,74 +1,85 @@
-#include "FenetreModifier.h"
+ï»¿#include "FenetreModifier.h"
 #include "ui_FenetreModifier.h"
 #include "Interface/InterfacePrincipale.h"
-#include <stdio.h>
+#include "Traitement/FlouGaussien.h"
 
-FenetreModifier::FenetreModifier(QWidget *parent) :
+FenetreModifier::FenetreModifier(Traitement* traitement, bool modification, QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::FenetreModifier)
+    ui(new Ui::FenetreModifier)
 {
-	ui->setupUi(this);
+    this->traitement=traitement;
+
+    this->parametres=traitement->getParametres();
+
+    ui->setupUi(this, parametres);
+
+    this->modification=modification;
+
+    if(modification){
+        this->sauvegardeValeurs=traitement->toValeurList(traitement->getParametres());
+    }
 }
 
-FenetreModifier::FenetreModifier(InterfacePrincipale* interface, QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::FenetreModifier)
-{
-	ui->setupUi(this);
-	this->interface = interface;
-
-	interface->majImage3(flouGaussien(ui->spinBoxLargeurNoyau->value(), ui->spinBoxHauteurNoyau->value(), ui->doubleSpinBoxSigma->value()));
-
-}
 FenetreModifier::~FenetreModifier()
 {
-	delete ui;
+    delete ui;
+    traitement->detruireFenetre();
+}
+
+
+list<Parametre> FenetreModifier::getParametres(){
+    return this->parametres;
 }
 
 void FenetreModifier::on_validerBouton_clicked()
 {
-	this->~FenetreModifier();
+    envoyerValeurs();
+    traitement->validerModification();
+    this->~FenetreModifier();
 }
 
 void FenetreModifier::on_annulerBouton_clicked()
 {
-	this->~FenetreModifier();
+    if(!modification){
+        traitement->annulerAjout();
+    }
+    else{
+        traitement->appliquer(sauvegardeValeurs);
+    }
+    this->~FenetreModifier();
 }
 
-void FenetreModifier::on_spinBoxLargeurNoyau_valueChanged(int largeurNoyau)
+void FenetreModifier::on_appliquerBouton_clicked()
 {
-	if (largeurNoyau % 2 != 1) {//largeurNoyau doit être impaire
-		ui->spinBoxLargeurNoyau->setValue(largeurNoyau + 1);
-	}
-	interface->majImage3(flouGaussien(
-		ui->spinBoxLargeurNoyau->value(),
-		ui->spinBoxHauteurNoyau->value(),
-		ui->doubleSpinBoxSigma->value()
-	));
+    envoyerValeurs();
 }
 
-void FenetreModifier::on_spinBoxHauteurNoyau_valueChanged(int hauteurNoyau)
-{
-	if (hauteurNoyau % 2 != 1)//hauteurNoyau doit être impaire
-		ui->spinBoxHauteurNoyau->setValue(hauteurNoyau + 1);
-	interface->majImage3(flouGaussien(
-		ui->spinBoxLargeurNoyau->value(),
-		ui->spinBoxHauteurNoyau->value(),
-		ui->doubleSpinBoxSigma->value()
-	));
+void FenetreModifier::envoyerValeurs(){
+    list<Valeur> valeurs;
+    list<QDoubleSpinBox*>::iterator itChamp=ui->champs.begin();
+
+    for (list<Parametre>::iterator it=this->parametres.begin(); it != this->parametres.end(); ++it){
+        Valeur v;
+        switch((*it).type){
+            case _INT :
+                v._int = (*itChamp)->value();
+                break;
+            
+            case _DOUBLE :
+                v._double = (*itChamp)->value();
+                break;
+
+            default :
+                printf("ERREUR : Type de variable (%i) de paramÃ¨tre non trouvÃ© \n", (*it).type);
+                break;
+        }
+        valeurs.push_back(v);
+        ++itChamp;
+    }
+
+    traitement->appliquer(valeurs);
 }
 
-void FenetreModifier::on_doubleSpinBoxSigma_valueChanged(double sigma)
-{
-	interface->majImage3(flouGaussien(ui->spinBoxLargeurNoyau->value(),
-		ui->spinBoxHauteurNoyau->value(),
-		sigma));
-}
-
-
-cv::Mat FenetreModifier::flouGaussien(int largeurNoyau, int hauteurNoyau, double sigma) {
-
-	cv::Mat imageFloue;
-	cv::GaussianBlur(interface->gestionImage.getImageOriginale(), imageFloue, cv::Size(largeurNoyau, hauteurNoyau), sigma);
-	return imageFloue;
+void FenetreModifier::afficherInfo(string texte){
+    ui->infoLabel->setText(QString::fromStdString(texte));
 }

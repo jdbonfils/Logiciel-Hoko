@@ -1,22 +1,23 @@
-#include "InterfacePrincipale.h"
+ï»¿#include "Interface/InterfacePrincipale.h"
 #include "ui_InterfacePrincipale.h"
+// #include "Fenetres/FenetreModifier.h"
+// #include "Image/GestionImage.h"
+// #include "Traitement/GestionTraitement.h"
+
 #include <opencv2/opencv.hpp>
 #include <QFileDialog>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
+#include <stdio.h>
+#include <cmath>
+#include <QResizeEvent>
+
 #include <qdesktopservices.h>
 #include <QtWidgets/qtwidgetsglobal.h>
 #include <string>
 #include <qmessagebox.h>
 #include <iostream>
-#include <cmath>
-#include <stdio.h>
-#include <windows.h>
-#include <libloaderapi.h>
-#include <qpainter.h>
-#include <QResizeEvent>
-#include "Fenetres/FenetreModifier.h"
-#include "Image/GestionImage.h"
+
 #if defined(Q_OS_WIN32) // Includes pour la compilation sous Windows
 #include <windows.h>
 #include <libloaderapi.h>
@@ -26,15 +27,19 @@
 
 
 using namespace std;
-using namespace cv;
 
 
-InterfacePrincipale::InterfacePrincipale(GestionImage gestionImage, QWidget *parent) :
+
+InterfacePrincipale::InterfacePrincipale(Controleur *controleur, QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::InterfacePrincipale)
 {
 	ui->setupUi(this);
-	gestionImage = gestionImage;
+	this->controleur = controleur;
+
+	// gestionImage = controleur->getGestionImage();
+
+	// gestionTraitement = gestionTraitement;
 }
 
 InterfacePrincipale::~InterfacePrincipale()
@@ -42,62 +47,117 @@ InterfacePrincipale::~InterfacePrincipale()
 	delete ui;
 }
 
+
 void InterfacePrincipale::importerUneImage()
 {
-	QString nomImage = QFileDialog::getOpenFileName(this, tr("Open Image"), QDir::currentPath(), tr("Image Files [ *.jpg , *.jpeg , *.bmp , *.png , *.gif]"));
+	QString nomImage = QFileDialog::getOpenFileName(this, tr("Open Image"), QDir::currentPath(), tr("Images (*.png *.jpg *.jpeg)"));
 
-	char* cheminImage = nomImage.toLocal8Bit().data();
+	if (nomImage != "") {
+		ui->ajouterBouton->setEnabled(true);
 
-	gestionImage.setImageOriginale(cv::imread(cheminImage));
+		char* cheminImage = nomImage.toLocal8Bit().data();
 
-	cv::Mat imageMat = gestionImage.getImageOriginale();
+		controleur->getGestionImage()->setImageOriginale(cv::imread(cheminImage));
 
-	majImage1(imageMat);
-	majImage2(imageMat);
-	majImage3(imageMat);
-	majImage4(imageMat);
+		cv::Mat imageMat = controleur->getGestionImage()->getImageOriginale();
+
+		majImage1(imageMat);
+
+		if (ui->listeTraitements->count() > 0) {
+			controleur->getGestionTraitement()->majTraitements();
+			int position = ui->listeTraitements->currentRow();
+			majImage2(controleur->getGestionTraitement()->getTraitement(position)->getImageEntree());
+			majImage3(controleur->getGestionTraitement()->getTraitement(position)->getImageTraitee());
+			majImage4(controleur->getGestionTraitement()->getTraitement(ui->listeTraitements->count() - 1)->getImageTraitee());
+		}
+		else {
+			majImage2(imageMat);
+			majImage3(imageMat);
+			majImage4(imageMat);
+		}
+	}
 }
+
 
 void InterfacePrincipale::resizeEvent(QResizeEvent* event)
 {
-	if (gestionImage.isImportee()) {
-
-		cv::Mat imageMat = gestionImage.getImageOriginale();
+	if (controleur->getGestionImage()->isImportee()) {
+		cv::Mat imageMat = controleur->getGestionImage()->getImageOriginale();
 
 		majImage1(imageMat);
-		majImage2(imageMat);
-		majImage3(imageMat);
-		majImage4(imageMat);
+		if (ui->listeTraitements->count() > 0) {
+			int position = ui->listeTraitements->currentRow();
+			majImage2(controleur->getGestionTraitement()->getTraitement(position)->getImageEntree());
+			majImage3(controleur->getGestionTraitement()->getTraitement(position)->getImageTraitee());
+			majImage4(controleur->getGestionTraitement()->getTraitement(ui->listeTraitements->count() - 1)->getImageTraitee());
+		}
+		else {
+			majImage2(imageMat);
+			majImage3(imageMat);
+			majImage4(imageMat);
+		}
 	}
 }
+
+
 void InterfacePrincipale::sauvegarderImageFinale()
 {
-	if (gestionImage.isImportee()) {
-		//On recupere la dernière image (label4) au format Qpixmap
+	if (controleur->getGestionImage()->isImportee()) {
+		//On recupere la derniÃ¨re image (label4) au format Qpixmap
 		const QPixmap *imageQ = ui->image4->pixmap();
 		//Conversion du Qpixmap en Qimage
 		QImage monImage = imageQ->toImage();
 		//Choix de l'emplacement de la photo
 		QString filename = QFileDialog::getSaveFileName(this, tr("Sauvegarder l'image"), QDir::currentPath());
-		//Sauvegarde de l'image à l'emplacement souhaité
-		monImage.save(filename);
+
+		if (filename != "") {
+			//Sauvegarde de l'image Ã  l'emplacement souhaitÃ©
+			monImage.save(filename);
+		}
 	}
 	else
 	{
-		//Si aucune image n'a été importé
+		//Si aucune image n'a Ã©tÃ© importÃ©
 		QMessageBox::critical(this, tr("Erreur"), tr("Importez d'abord une image"));
 		importerUneImage();
 	}
 
 
 }
+
+void InterfacePrincipale::chargerConfiguration() {
+
+	int validation = 16384; //Bouton Ok
+	printf("v=%i\n", validation);
+	if (ui->listeTraitements->count() > 0)
+		validation = QMessageBox::question(this, tr("ÃŠtes-vous sÃ»r ?"), tr("Votre configuration actuelle sera perdue."));
+	printf("v=%i\n", validation);
+	if (validation == 16384) {
+
+		if (controleur->getGestionImage()->isImportee()) {
+			QString chemin = QFileDialog::getOpenFileName(this, tr("Charger une configuration"), QDir::currentPath(), tr("HoKo XML (*.hoklm)"));
+			ui->listeTraitements->clear();
+			this->controleur->getGestionTraitement()->importerListeTraitement(chemin);
+		}
+		else {
+			QMessageBox::critical(this, tr("Erreur"), tr("Importez d'abord une image"));
+			importerUneImage();
+		}
+	}
+}
+
+void InterfacePrincipale::exporterConfiguration() {
+	QString chemin = QFileDialog::getSaveFileName(this, tr("Exporter la configuration"), QDir::currentPath(), tr("HoKo XML (*.hoklm)"));
+	this->controleur->getGestionTraitement()->exporterListeTraitement(chemin);
+}
+
 void InterfacePrincipale::afficherGuide()
 {
 #if defined(Q_OS_WIN32)
 	char buffer[MAX_PATH];
-	//récupere le nom du exe avec son chemin aboslue
+	//rÃ©cupere le nom du exe avec son chemin aboslue
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
-	//récupere le nom du exe avec son chemin absolue et coupe le nom de l'executable pour garder que le chemin absolue vers le fichier
+	//rÃ©cupere le nom du exe avec son chemin absolue et coupe le nom de l'executable pour garder que le chemin absolue vers le fichier
 	string::size_type pos = string(buffer).find_last_of("\\/");
 	//Conversion d'une chaine string en qstring
 	QString qpath = QString::fromStdString(string(buffer).substr(0, pos));
@@ -113,13 +173,14 @@ void InterfacePrincipale::afficherGuide()
 	}
 
 }
+
 void InterfacePrincipale::afficherApropos()
 {
 #if defined(Q_OS_WIN32)
 	char buffer[MAX_PATH];
-	//récupere le nom du exe avec son chemin aboslue
+	//rÃ©cupere le nom du exe avec son chemin aboslue
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
-	//récupere le nom du exe avec son chemin absolue et coupe le nom de l'executable pour garder que le chemin absolue vers le fichier
+	//rÃ©cupere le nom du exe avec son chemin absolue et coupe le nom de l'executable pour garder que le chemin absolue vers le fichier
 	string::size_type pos = string(buffer).find_last_of("\\/");
 	//Conversion d'une chaine string en qstring
 	QString qpath = QString::fromStdString(string(buffer).substr(0, pos));
@@ -134,39 +195,46 @@ void InterfacePrincipale::afficherApropos()
 	}
 }
 
-
-
 void InterfacePrincipale::on_ajouterBouton_clicked()
 {
-
-	if (gestionImage.isImportee()) {
-		FenetreModifier *fenMod = new FenetreModifier(this);
-		fenMod->show();
+	if (controleur->getGestionImage()->isImportee()) {
+		controleur->getGestionTraitement()->ajouterTraitement(ui->choixTraitement->currentIndex());
 	}
 }
 
+
 void InterfacePrincipale::majImage1(cv::Mat image) {
-	image = redimensionner(image);
+	// image = redimensionner(image);
 	QImage imageQ = QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format_RGB888).rgbSwapped();
-	ui->image1->setPixmap(QPixmap::fromImage(imageQ));
+	ui->image1->setPixmap(QPixmap::fromImage(imageQ.scaled(ui->image2->size(), Qt::KeepAspectRatio)));
 }
 
 void InterfacePrincipale::majImage2(cv::Mat image) {
-	image = redimensionner(image);
+	//image = redimensionner(image);
 	QImage imageQ = QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format_RGB888).rgbSwapped();
-	ui->image2->setPixmap(QPixmap::fromImage(imageQ));
+	ui->image2->setPixmap(QPixmap::fromImage(imageQ.scaled(ui->image2->size(), Qt::KeepAspectRatio)));
 }
 
 void InterfacePrincipale::majImage3(cv::Mat image) {
-	image = redimensionner(image);
+	// image = redimensionner(image);
 	QImage imageQ = QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format_RGB888).rgbSwapped();
-	ui->image3->setPixmap(QPixmap::fromImage(imageQ));
+	ui->image3->setPixmap(QPixmap::fromImage(imageQ.scaled(ui->image2->size(), Qt::KeepAspectRatio)));
 }
 
 void InterfacePrincipale::majImage4(cv::Mat image) {
-	image = redimensionner(image);
+	// image = redimensionner(image);
 	QImage imageQ = QImage((const unsigned char*)image.data, image.cols, image.rows, QImage::Format_RGB888).rgbSwapped();
-	ui->image4->setPixmap(QPixmap::fromImage(imageQ));
+	ui->image4->setPixmap(QPixmap::fromImage(imageQ.scaled(ui->image2->size(), Qt::KeepAspectRatio)));
+}
+
+
+void InterfacePrincipale::ajouterTraitementListe(std::string nom) {
+	ui->listeTraitements->addItem(QString::fromStdString(nom));
+	ui->listeTraitements->setCurrentRow(ui->listeTraitements->count() - 1);
+}
+
+void InterfacePrincipale::annulerAjoutTraitementListe() {
+	ui->listeTraitements->takeItem(ui->listeTraitements->count() - 1);
 }
 
 cv::Mat InterfacePrincipale::redimensionner(cv::Mat image) {
@@ -179,4 +247,88 @@ cv::Mat InterfacePrincipale::redimensionner(cv::Mat image) {
 
 	cv::resize(image, image, cv::Size(), echelle, echelle);
 	return image;
+}
+
+void InterfacePrincipale::afficherTraitement(int position) {
+	if (position >= 0) {
+		majImage2(controleur->getGestionTraitement()->getTraitement(position)->getImageEntree());
+		majImage3(controleur->getGestionTraitement()->getTraitement(position)->getImageTraitee());
+	}
+}
+
+void InterfacePrincipale::erreurFichier() {
+	QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier..."));
+}
+
+void InterfacePrincipale::majActivationControles() {
+	int position = ui->listeTraitements->currentRow();
+	int nombre = ui->listeTraitements->count();
+
+	if (position != -1) { // Un traitement est sÃ©lectionnÃ©
+		ui->modifierBouton->setEnabled(true);
+		// ui->actifCheckBox->setEnabled(true);
+		ui->supprimerBouton->setEnabled(true);
+
+		if (position == 0) { // Premier traitement
+			ui->hautBouton->setEnabled(false);
+		}
+		else {
+			ui->hautBouton->setEnabled(true);
+		}
+
+		if (position == nombre - 1) { // Dernier traitement
+			ui->basBouton->setEnabled(false);
+		}
+		else {
+			ui->basBouton->setEnabled(true);
+		}
+	}
+	else { // Sinon tout dÃ©sactiver
+		ui->modifierBouton->setEnabled(false);
+		// ui->actifCheckBox->setEnabled(false);
+		ui->supprimerBouton->setEnabled(false);
+	}
+}
+
+void InterfacePrincipale::on_listeTraitements_currentRowChanged(int currentRow) {
+	afficherTraitement(currentRow);
+	majActivationControles();
+}
+
+void InterfacePrincipale::on_supprimerBouton_clicked() {
+	int position = ui->listeTraitements->currentRow();
+	ui->listeTraitements->takeItem(position);
+	controleur->getGestionTraitement()->supprimerTraitement(position);
+
+	if (ui->listeTraitements->count() > 0)
+		afficherTraitement(ui->listeTraitements->currentRow());
+
+	majActivationControles();
+}
+
+void InterfacePrincipale::on_modifierBouton_clicked() {
+	int position = ui->listeTraitements->currentRow();
+	controleur->getGestionTraitement()->modifierTraitement(position);
+}
+
+void InterfacePrincipale::on_hautBouton_clicked() {
+	int position = ui->listeTraitements->currentRow();
+	controleur->getGestionTraitement()->intervertirTraitements(position, position - 1);
+
+	QString tmp = ui->listeTraitements->currentItem()->text();
+	ui->listeTraitements->currentItem()->setText(ui->listeTraitements->item(position - 1)->text());
+	ui->listeTraitements->item(position - 1)->setText(tmp);
+
+	ui->listeTraitements->setCurrentRow(position - 1);
+}
+
+void InterfacePrincipale::on_basBouton_clicked() {
+	int position = ui->listeTraitements->currentRow();
+	controleur->getGestionTraitement()->intervertirTraitements(position, position + 1);
+
+	QString tmp = ui->listeTraitements->currentItem()->text();
+	ui->listeTraitements->currentItem()->setText(ui->listeTraitements->item(position + 1)->text());
+	ui->listeTraitements->item(position + 1)->setText(tmp);
+
+	ui->listeTraitements->setCurrentRow(position + 1);
 }

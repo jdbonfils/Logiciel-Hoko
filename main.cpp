@@ -1,16 +1,17 @@
 #include "Interface/InterfacePrincipale.h"
 #include "Image/GestionImage.h"
+#include "Traitement/GestionTraitement.h"
+#include "Controleur.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-	GestionImage gestionImage;
+    QApplication a(argc, argv);
+    
+    Controleur controleur;
 
-	InterfacePrincipale interfacePrincipale(gestionImage);
-
-	interfacePrincipale.showMaximized();
-
-	return a.exec();
+	controleur.getInterface()->showMaximized();
+    
+    return a.exec();
 }

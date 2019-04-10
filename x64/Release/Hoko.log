@@ -1,7 +1,2 @@
-﻿  Moc'ing Interface\Fenetres\FenetreModifier.h...
-  FenetreModifier.cpp
-  InterfacePrincipale.cpp
-  main.cpp
-  moc_InterfacePrincipale.cpp
-  moc_FenetreModifier.cpp
-  Hoko.vcxproj -> C:\Users\jeand\source\repos\Hoko\x64\Release\Hoko.exe
+﻿  Contours.cpp
+  Hoko.vcxproj -> C:\HokoListeTraitement\Hoko\x64\Release\Hoko.exe

@@ -48,15 +48,15 @@ public:
     QLabel *image4;
     QSpacerItem *horizontalSpacer;
     QVBoxLayout *verticalLayout;
-    QListWidget *listWidget;
-    QCheckBox *checkBox;
+    QListWidget *listeTraitements;
+    QCheckBox *actifCheckBox;
     QHBoxLayout *horizontalLayout_2;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_4;
-    QPushButton *pushButton;
+    QPushButton *hautBouton;
+    QPushButton *basBouton;
+    QPushButton *modifierBouton;
+    QPushButton *supprimerBouton;
     QHBoxLayout *horizontalLayout_3;
-    QComboBox *comboBox;
+    QComboBox *choixTraitement;
     QPushButton *ajouterBouton;
     QMenuBar *menuBar;
     QMenu *menuHoKo;
@@ -143,55 +143,55 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        listWidget = new QListWidget(centralWidget);
-        new QListWidgetItem(listWidget);
-        new QListWidgetItem(listWidget);
-        new QListWidgetItem(listWidget);
-        new QListWidgetItem(listWidget);
-        new QListWidgetItem(listWidget);
-        new QListWidgetItem(listWidget);
-        listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listeTraitements = new QListWidget(centralWidget);
+        listeTraitements->setObjectName(QString::fromUtf8("listeTraitements"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(listWidget->sizePolicy().hasHeightForWidth());
-        listWidget->setSizePolicy(sizePolicy1);
-        listWidget->setMinimumSize(QSize(0, 0));
+        sizePolicy1.setHeightForWidth(listeTraitements->sizePolicy().hasHeightForWidth());
+        listeTraitements->setSizePolicy(sizePolicy1);
+        listeTraitements->setMinimumSize(QSize(0, 0));
 
-        verticalLayout->addWidget(listWidget);
+        verticalLayout->addWidget(listeTraitements);
 
-        checkBox = new QCheckBox(centralWidget);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+        actifCheckBox = new QCheckBox(centralWidget);
+        actifCheckBox->setObjectName(QString::fromUtf8("actifCheckBox"));
+        actifCheckBox->setEnabled(false);
+        actifCheckBox->setChecked(true);
 
-        verticalLayout->addWidget(checkBox);
+        verticalLayout->addWidget(actifCheckBox);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        hautBouton = new QPushButton(centralWidget);
+        hautBouton->setObjectName(QString::fromUtf8("hautBouton"));
+        hautBouton->setEnabled(false);
 
-        horizontalLayout_2->addWidget(pushButton_2);
+        horizontalLayout_2->addWidget(hautBouton);
 
-        pushButton_3 = new QPushButton(centralWidget);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        basBouton = new QPushButton(centralWidget);
+        basBouton->setObjectName(QString::fromUtf8("basBouton"));
         QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(pushButton_3->sizePolicy().hasHeightForWidth());
-        pushButton_3->setSizePolicy(sizePolicy2);
+        sizePolicy2.setHeightForWidth(basBouton->sizePolicy().hasHeightForWidth());
+        basBouton->setSizePolicy(sizePolicy2);
+        basBouton->setEnabled(false);
 
-        horizontalLayout_2->addWidget(pushButton_3);
+        horizontalLayout_2->addWidget(basBouton);
 
-        pushButton_4 = new QPushButton(centralWidget);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+        modifierBouton = new QPushButton(centralWidget);
+        modifierBouton->setObjectName(QString::fromUtf8("modifierBouton"));
+        modifierBouton->setEnabled(false);
 
-        horizontalLayout_2->addWidget(pushButton_4);
+        horizontalLayout_2->addWidget(modifierBouton);
 
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        supprimerBouton = new QPushButton(centralWidget);
+        supprimerBouton->setObjectName(QString::fromUtf8("supprimerBouton"));
+        supprimerBouton->setEnabled(false);
 
-        horizontalLayout_2->addWidget(pushButton);
+        horizontalLayout_2->addWidget(supprimerBouton);
 
 
         verticalLayout->addLayout(horizontalLayout_2);
@@ -199,18 +199,19 @@ public:
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        comboBox = new QComboBox(centralWidget);
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+        choixTraitement = new QComboBox(centralWidget);
+        choixTraitement->addItem(QString());
+        choixTraitement->addItem(QString());
+        choixTraitement->addItem(QString());
+        choixTraitement->addItem(QString());
+        choixTraitement->addItem(QString());
+        choixTraitement->setObjectName(QString::fromUtf8("choixTraitement"));
 
-        horizontalLayout_3->addWidget(comboBox);
+        horizontalLayout_3->addWidget(choixTraitement);
 
         ajouterBouton = new QPushButton(centralWidget);
         ajouterBouton->setObjectName(QString::fromUtf8("ajouterBouton"));
+        ajouterBouton->setEnabled(false);
 
         horizontalLayout_3->addWidget(ajouterBouton);
 
@@ -248,6 +249,8 @@ public:
         retranslateUi(InterfacePrincipale);
         QObject::connect(actionImporter_une_image, SIGNAL(triggered()), InterfacePrincipale, SLOT(importerUneImage()));
         QObject::connect(actionSauvegarder_l_image_finale, SIGNAL(triggered()), InterfacePrincipale, SLOT(sauvegarderImageFinale()));
+        QObject::connect(actionExporter_la_configuration, SIGNAL(triggered()), InterfacePrincipale, SLOT(exporterConfiguration()));
+        QObject::connect(actionCharger_une_configuration, SIGNAL(triggered()), InterfacePrincipale, SLOT(chargerConfiguration()));
         QObject::connect(actionAide, SIGNAL(triggered()), InterfacePrincipale, SLOT(afficherGuide()));
         QObject::connect(actionVersion, SIGNAL(triggered()), InterfacePrincipale, SLOT(afficherApropos()));
 
@@ -258,44 +261,63 @@ public:
     {
         InterfacePrincipale->setWindowTitle(QApplication::translate("InterfacePrincipale", "HoKo", nullptr));
         actionCharger_une_configuration->setText(QApplication::translate("InterfacePrincipale", "Charger une configuration", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionCharger_une_configuration->setShortcut(QApplication::translate("InterfacePrincipale", "Ctrl+O", nullptr));
+#endif // QT_NO_SHORTCUT
         actionExporter_la_configuration->setText(QApplication::translate("InterfacePrincipale", "Exporter la configuration", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionExporter_la_configuration->setShortcut(QApplication::translate("InterfacePrincipale", "Ctrl+S", nullptr));
+#endif // QT_NO_SHORTCUT
         actionImporter_une_image->setText(QApplication::translate("InterfacePrincipale", "Importer une image", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionImporter_une_image->setShortcut(QApplication::translate("InterfacePrincipale", "Ctrl+I", nullptr));
+#endif // QT_NO_SHORTCUT
         actionSauvegarder_l_image_finale->setText(QApplication::translate("InterfacePrincipale", "Sauvegarder l'image finale", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionSauvegarder_l_image_finale->setShortcut(QApplication::translate("InterfacePrincipale", "Ctrl+Alt+S", nullptr));
+#endif // QT_NO_SHORTCUT
         actionAide->setText(QApplication::translate("InterfacePrincipale", "Guide d'utilisation", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionAide->setShortcut(QApplication::translate("InterfacePrincipale", "Ctrl+G", nullptr));
+#endif // QT_NO_SHORTCUT
         actionVersion->setText(QApplication::translate("InterfacePrincipale", "\303\200 propos de HoKo", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionVersion->setShortcut(QApplication::translate("InterfacePrincipale", "Ctrl+H", nullptr));
+#endif // QT_NO_SHORTCUT
         image2->setText(QString());
         image3->setText(QString());
         image1->setText(QString());
         image4->setText(QString());
-
-        const bool __sortingEnabled = listWidget->isSortingEnabled();
-        listWidget->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = listWidget->item(0);
-        ___qlistwidgetitem->setText(QApplication::translate("InterfacePrincipale", "Traitement 1", nullptr));
-        QListWidgetItem *___qlistwidgetitem1 = listWidget->item(1);
-        ___qlistwidgetitem1->setText(QApplication::translate("InterfacePrincipale", "Traitement 2", nullptr));
-        QListWidgetItem *___qlistwidgetitem2 = listWidget->item(2);
-        ___qlistwidgetitem2->setText(QApplication::translate("InterfacePrincipale", "Traitement 3", nullptr));
-        QListWidgetItem *___qlistwidgetitem3 = listWidget->item(3);
-        ___qlistwidgetitem3->setText(QApplication::translate("InterfacePrincipale", "Traitement 4", nullptr));
-        QListWidgetItem *___qlistwidgetitem4 = listWidget->item(4);
-        ___qlistwidgetitem4->setText(QApplication::translate("InterfacePrincipale", "Traitement 5", nullptr));
-        QListWidgetItem *___qlistwidgetitem5 = listWidget->item(5);
-        ___qlistwidgetitem5->setText(QApplication::translate("InterfacePrincipale", "Traitement 6", nullptr));
-        listWidget->setSortingEnabled(__sortingEnabled);
-
-        checkBox->setText(QApplication::translate("InterfacePrincipale", "Actif", nullptr));
-        pushButton_2->setText(QApplication::translate("InterfacePrincipale", "^", nullptr));
-        pushButton_3->setText(QApplication::translate("InterfacePrincipale", "v", nullptr));
-        pushButton_4->setText(QApplication::translate("InterfacePrincipale", "Modifier", nullptr));
-        pushButton->setText(QApplication::translate("InterfacePrincipale", "Supprimer", nullptr));
-        comboBox->setItemText(0, QApplication::translate("InterfacePrincipale", "Traitement", nullptr));
-        comboBox->setItemText(1, QApplication::translate("InterfacePrincipale", "Traitement", nullptr));
-        comboBox->setItemText(2, QApplication::translate("InterfacePrincipale", "Traitement", nullptr));
-        comboBox->setItemText(3, QApplication::translate("InterfacePrincipale", "Traitement", nullptr));
-        comboBox->setItemText(4, QApplication::translate("InterfacePrincipale", "Traitement", nullptr));
+        actifCheckBox->setText(QApplication::translate("InterfacePrincipale", "Actif", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actifCheckBox->setShortcut(QApplication::translate("InterfacePrincipale", "Shift+A", nullptr));
+#endif // QT_NO_SHORTCUT
+        hautBouton->setText(QApplication::translate("InterfacePrincipale", "\311\205", nullptr));
+#ifndef QT_NO_SHORTCUT
+        hautBouton->setShortcut(QApplication::translate("InterfacePrincipale", "Ctrl+Up", nullptr));
+#endif // QT_NO_SHORTCUT
+        basBouton->setText(QApplication::translate("InterfacePrincipale", "V", nullptr));
+#ifndef QT_NO_SHORTCUT
+        basBouton->setShortcut(QApplication::translate("InterfacePrincipale", "Ctrl+Down", nullptr));
+#endif // QT_NO_SHORTCUT
+        modifierBouton->setText(QApplication::translate("InterfacePrincipale", "Modifier", nullptr));
+#ifndef QT_NO_SHORTCUT
+        modifierBouton->setShortcut(QApplication::translate("InterfacePrincipale", "M", nullptr));
+#endif // QT_NO_SHORTCUT
+        supprimerBouton->setText(QApplication::translate("InterfacePrincipale", "Supprimer", nullptr));
+#ifndef QT_NO_SHORTCUT
+        supprimerBouton->setShortcut(QApplication::translate("InterfacePrincipale", "Del", nullptr));
+#endif // QT_NO_SHORTCUT
+        choixTraitement->setItemText(0, QApplication::translate("InterfacePrincipale", "Flou Gaussien", nullptr));
+        choixTraitement->setItemText(1, QApplication::translate("InterfacePrincipale", "Masque CAM3", nullptr));
+        choixTraitement->setItemText(2, QApplication::translate("InterfacePrincipale", "Segmentation TSV", nullptr));
+        choixTraitement->setItemText(3, QApplication::translate("InterfacePrincipale", "Filtre de Canny", nullptr));
+        choixTraitement->setItemText(4, QApplication::translate("InterfacePrincipale", "D\303\251tection de contours", nullptr));
 
         ajouterBouton->setText(QApplication::translate("InterfacePrincipale", "Ajouter", nullptr));
+#ifndef QT_NO_SHORTCUT
+        ajouterBouton->setShortcut(QApplication::translate("InterfacePrincipale", "A", nullptr));
+#endif // QT_NO_SHORTCUT
         menuHoKo->setTitle(QApplication::translate("InterfacePrincipale", "Image", nullptr));
         menuCOnfiguration->setTitle(QApplication::translate("InterfacePrincipale", "Configuration", nullptr));
         menuAide->setTitle(QApplication::translate("InterfacePrincipale", "Aide", nullptr));

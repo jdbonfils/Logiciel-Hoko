@@ -1,18 +1,13 @@
-﻿  GestionImage.cpp
+﻿  Controleur.cpp
+  GestionImage.cpp
   FenetreModifier.cpp
   InterfacePrincipale.cpp
   main.cpp
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(29): error C2061: erreur de syntaxe : identificateur 'InterfacePrincipale' (compilation du fichier source Interface\InterfacePrincipale.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2143: erreur de syntaxe : absence de ';' avant '*' (compilation du fichier source Interface\InterfacePrincipale.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut (compilation du fichier source Interface\InterfacePrincipale.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2238: jetons inattendus avant ';' (compilation du fichier source Interface\InterfacePrincipale.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(29): error C2061: erreur de syntaxe : identificateur 'InterfacePrincipale' (compilation du fichier source main.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2143: erreur de syntaxe : absence de ';' avant '*' (compilation du fichier source main.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut (compilation du fichier source main.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2238: jetons inattendus avant ';' (compilation du fichier source main.cpp)
-  qrc_Hoko.cpp
+  FlouGaussien.cpp
+  GestionTraitement.cpp
+  Traitement.cpp
+  moc_FenetreModifier.cpp
   moc_InterfacePrincipale.cpp
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(29): error C2061: erreur de syntaxe : identificateur 'InterfacePrincipale' (compilation du fichier source GeneratedFiles\Debug\moc_InterfacePrincipale.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2143: erreur de syntaxe : absence de ';' avant '*' (compilation du fichier source GeneratedFiles\Debug\moc_InterfacePrincipale.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut (compilation du fichier source GeneratedFiles\Debug\moc_InterfacePrincipale.cpp)
-c:\users\jeand\source\repos\hoko\hoko\interface\fenetres\fenetremodifier.h(67): error C2238: jetons inattendus avant ';' (compilation du fichier source GeneratedFiles\Debug\moc_InterfacePrincipale.cpp)
+InterfacePrincipale.obj : error LNK2019: symbole externe non résolu "void __cdecl cv::resize(class cv::debug_build_guard::_InputArray const &,class cv::debug_build_guard::_OutputArray const &,class cv::Size_<int>,double,double,int)" (?resize@cv@@YAXAEBV_InputArray@debug_build_guard@1@AEBV_OutputArray@31@V?$Size_@H@1@NNH@Z) référencé dans la fonction "private: class cv::Mat __cdecl InterfacePrincipale::redimensionner(class cv::Mat)" (?redimensionner@InterfacePrincipale@@AEAA?AVMat@cv@@V23@@Z)
+FlouGaussien.obj : error LNK2019: symbole externe non résolu "void __cdecl cv::GaussianBlur(class cv::debug_build_guard::_InputArray const &,class cv::debug_build_guard::_OutputArray const &,class cv::Size_<int>,double,double,int)" (?GaussianBlur@cv@@YAXAEBV_InputArray@debug_build_guard@1@AEBV_OutputArray@31@V?$Size_@H@1@NNH@Z) référencé dans la fonction "public: class cv::Mat __cdecl FlouGaussien::appliquer(int,int,double)" (?appliquer@FlouGaussien@@QEAA?AVMat@cv@@HHN@Z)
+C:\HokoListeTraitement\Hoko\x64\Debug\\Hoko.exe : fatal error LNK1120: 2 externes non résolus

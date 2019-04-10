@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Traitement id="1" nom="Masque">
+    <Parametre nom="CAM" type="0" valeur="3"/>
+</Traitement>
+<Traitement id="2" nom="Segmentation TSV">
+    <Parametre nom="Teinte Min" type="0" valeur="4"/>
+    <Parametre nom="Teinte Max" type="0" valeur="24"/>
+    <Parametre nom="Saturation Min" type="0" valeur="0"/>
+    <Parametre nom="Saturation Max" type="0" valeur="105"/>
+    <Parametre nom="Valeur Min" type="0" valeur="99"/>
+    <Parametre nom="Valeur Max" type="0" valeur="194"/>
+</Traitement>
+<Traitement id="3" nom="Filtre de Canny">
+    <Parametre nom="Seuil 1" type="0" valeur="100"/>
+    <Parametre nom="Seuil 2" type="0" valeur="200"/>
+    <Parametre nom="Ouverture" type="0" valeur="3"/>
+</Traitement>
+<Traitement id="4" nom="D�tection de contours">
+    <Parametre nom="Surface minimum" type="1" valeur="1"/>
+    <Parametre nom="Surface maximum" type="1" valeur="1.5"/>
+    <Parametre nom="Compacit� minimum" type="1" valeur="0"/>
+    <Parametre nom="Compacit� maximum" type="1" valeur="0.2"/>
+</Traitement>
+<Traitement id="0" nom="Flou Gaussien">
+    <Parametre nom="hauteurNoyau" type="0" valeur="1"/>
+    <Parametre nom="largeurNoyau" type="0" valeur="1"/>
+    <Parametre nom="sigma" type="1" valeur="0"/>
+</Traitement>
+<Traitement id="0" nom="Flou Gaussien">
+    <Parametre nom="hauteurNoyau" type="0" valeur="1"/>
+    <Parametre nom="largeurNoyau" type="0" valeur="55"/>
+    <Parametre nom="sigma" type="1" valeur="0"/>
+</Traitement>

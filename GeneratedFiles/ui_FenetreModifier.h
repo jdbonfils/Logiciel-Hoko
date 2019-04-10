@@ -33,7 +33,8 @@ public:
     QDoubleSpinBox *doubleSpinBoxSigma;
     QHBoxLayout *horizontalLayout;
     QPushButton *validerBouton;
-    QPushButton *pushButton;
+    QPushButton *appliquerBouton;
+    QPushButton *annulerBouton;
 
     void setupUi(QDialog *FenetreModifier)
     {
@@ -83,10 +84,15 @@ public:
 
         horizontalLayout->addWidget(validerBouton);
 
-        pushButton = new QPushButton(FenetreModifier);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        appliquerBouton = new QPushButton(FenetreModifier);
+        appliquerBouton->setObjectName(QString::fromUtf8("appliquerBouton"));
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout->addWidget(appliquerBouton);
+
+        annulerBouton = new QPushButton(FenetreModifier);
+        annulerBouton->setObjectName(QString::fromUtf8("annulerBouton"));
+
+        horizontalLayout->addWidget(annulerBouton);
 
 
         verticalLayout->addLayout(horizontalLayout);
@@ -99,12 +105,13 @@ public:
 
     void retranslateUi(QDialog *FenetreModifier)
     {
-        FenetreModifier->setWindowTitle(QApplication::translate("FenetreModifier", "Modification des parametres", nullptr));
+        FenetreModifier->setWindowTitle(QApplication::translate("FenetreModifier", "Modification des param\303\250tres", nullptr));
         labelNoyauLargeur->setText(QApplication::translate("FenetreModifier", "Largeur du noyau", nullptr));
         labelNoyauHauteur->setText(QApplication::translate("FenetreModifier", "Hauteur du noyau", nullptr));
         labelSigma->setText(QApplication::translate("FenetreModifier", "Sigma", nullptr));
         validerBouton->setText(QApplication::translate("FenetreModifier", "Valider", nullptr));
-        pushButton->setText(QApplication::translate("FenetreModifier", "Annuler", nullptr));
+        appliquerBouton->setText(QApplication::translate("FenetreModifier", "Appliquer", nullptr));
+        annulerBouton->setText(QApplication::translate("FenetreModifier", "Annuler", nullptr));
     } // retranslateUi
 
 };

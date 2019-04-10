@@ -124,7 +124,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QListWidget" name="listWidget">
+       <widget class="QListWidget" name="listeTraitements">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -137,56 +137,41 @@
           <height>0</height>
          </size>
         </property>
-        <item>
-         <property name="text">
-          <string>Traitement 1</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Traitement 2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Traitement 3</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Traitement 4</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Traitement 5</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Traitement 6</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="actifCheckBox">
         <property name="text">
          <string>Actif</string>
+        </property>
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="shortcut">
+          <string>Shift+A</string>
         </property>
        </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="hautBouton">
           <property name="text">
-           <string>^</string>
+           <string>Ʌ</string>
+          </property>
+          <property name="shortcut">
+            <string>Ctrl+Up</string>
+          </property>
+          <property name="enabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="basBouton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -194,21 +179,39 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>v</string>
+           <string>V</string>
+          </property>
+          <property name="shortcut">
+            <string>Ctrl+Down</string>
+          </property>
+          <property name="enabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="modifierBouton">
           <property name="text">
            <string>Modifier</string>
           </property>
+          <property name="shortcut">
+            <string>M</string>
+          </property>
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="supprimerBouton">
           <property name="text">
            <string>Supprimer</string>
+          </property>
+          <property name="shortcut">
+            <string>Del</string>
+          </property>
+          <property name="enabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -217,30 +220,30 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QComboBox" name="comboBox">
+         <widget class="QComboBox" name="choixTraitement">
           <item>
            <property name="text">
-            <string>Traitement</string>
+            <string>Flou Gaussien</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Traitement</string>
+            <string>Masque CAM3</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Traitement</string>
+            <string>Segmentation TSV</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Traitement</string>
+            <string>Filtre de Canny</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Traitement</string>
+            <string>Détection de contours</string>
            </property>
           </item>
          </widget>
@@ -249,6 +252,12 @@
          <widget class="QPushButton" name="ajouterBouton">
           <property name="text">
            <string>Ajouter</string>
+          </property>
+          <property name="shortcut">
+            <string>A</string>
+          </property>
+          <property name="enabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -297,30 +306,48 @@
    <property name="text">
     <string>Charger une configuration</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionExporter_la_configuration">
    <property name="text">
     <string>Exporter la configuration</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionImporter_une_image">
    <property name="text">
     <string>Importer une image</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
   </action>
   <action name="actionSauvegarder_l_image_finale">
    <property name="text">
     <string>Sauvegarder l'image finale</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
    </property>
   </action>
   <action name="actionAide">
    <property name="text">
     <string>Guide d'utilisation</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
   </action>
   <action name="actionVersion">
    <property name="text">
     <string>À propos de HoKo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
    </property>
   </action>
  </widget>
@@ -348,6 +375,38 @@
    <signal>triggered()</signal>
    <receiver>InterfacePrincipale</receiver>
    <slot>sauvegarderImageFinale()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExporter_la_configuration</sender>
+   <signal>triggered()</signal>
+   <receiver>InterfacePrincipale</receiver>
+   <slot>exporterConfiguration()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCharger_une_configuration</sender>
+   <signal>triggered()</signal>
+   <receiver>InterfacePrincipale</receiver>
+   <slot>chargerConfiguration()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
